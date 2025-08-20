@@ -1,0 +1,207 @@
+<!-- templates/plan.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Start Your Plan | NutriKind AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <style>
+    .plan-form label {
+      display: block;
+      margin-bottom: 0.5em;
+      font-weight: 600;
+    }
+    .plan-form .form-group {
+      margin-bottom: 1.5em;
+    }
+    .plan-form input,
+    .plan-form select,
+    .plan-form textarea {
+      width: 100%;
+      padding: 0.75em;
+      border: 1px solid #ccc;
+      border-radius: 0.5em;
+      font-family: inherit;
+    }
+    .breadcrumb {
+      font-size: 0.9em;
+      color: #555;
+      margin: 1em 0;
+    }
+    .hero-small {
+      padding: 1.5em 0;
+      background: #f8f1e6;
+      text-align: center;
+    }
+    .hero-small h1 {
+      font-size: 1.75em;
+      margin-bottom: 0.5em;
+    }
+    .hero-small p {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .meal-plan {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5em;
+    }
+    .meal-plan th,
+    .meal-plan td {
+      border: 1px solid #ccc;
+      padding: 0.75em;
+      text-align: left;
+    }
+    .meal-plan th {
+      background: #f5faf8;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container nav-container">
+      <div class="logo">NutriKind AI</div>
+      <a href="{{ url_for('home') }}" class="btn btn-outline">Home</a>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb container">
+    <a href="{{ url_for('home') }}">Home</a> &rsaquo; Start Your Plan
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero-small">
+    <h1>Generate Your Personalized Nutrition Plan</h1>
+    <p>Fill in a few simple health metrics and let NutriKind AI craft a daily meal plan tailored to each child’s needs.</p>
+  </section>
+
+  <!-- Input Form -->
+  <section class="plan-form container">
+    <form id="nutritionForm">
+      <div class="form-group">
+        <label for="child-name">Child's Name</label>
+        <input type="text" id="child-name" name="child-name" placeholder="Enter child's name" required />
+      </div>
+      <div class="form-group">
+        <label for="age">Age (in years)</label>
+        <input type="number" id="age" name="age" min="3" max="6" placeholder="3 - 6 years" required />
+      </div>
+      <div class="form-group">
+        <label for="weight">Weight (kg)</label>
+        <input type="number" id="weight" name="weight" min="5" max="25" step="0.1" placeholder="e.g., 12.5" required />
+      </div>
+      <div class="form-group">
+        <label for="height">Height (cm)</label>
+        <input type="number" id="height" name="height" min="70" max="120" placeholder="e.g., 95" required />
+      </div>
+      <div class="form-group">
+        <label for="hemoglobin">Hemoglobin Level (g/dL)</label>
+        <input type="number" id="hemoglobin" name="hemoglobin" min="5" max="15" step="0.1" placeholder="e.g., 11.3" required />
+      </div>
+      <div class="form-group">
+        <label for="muac">Mid-Upper Arm Circumference (MUAC) (cm)</label>
+        <input type="number" id="muac" name="muac" min="10" max="20" step="0.1" placeholder="e.g., 13.5" required />
+      </div>
+      <div class="form-group">
+        <label for="meal-frequency">Meal Frequency (meals/day)</label>
+        <input type="number" id="meal-frequency" name="meal-frequency" min="1" max="6" placeholder="e.g., 3" required />
+      </div>
+      <div class="form-group">
+        <label for="diet">Diet Preference</label>
+        <select id="diet" name="diet" required>
+          <option value="">Select...</option>
+          <option value="vegetarian">Vegetarian</option>
+          <option value="non-vegetarian">Non-Vegetarian</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="existing-conditions">Existing Conditions (if any)</label>
+        <textarea id="existing-conditions" name="existing-conditions" rows="3" placeholder="e.g., anemia, worm infection"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="weight-change">Weight Change Last Month (kg)</label>
+        <input type="number" id="weight-change" name="weight-change" step="0.1" placeholder="e.g., +0.5 or -0.2" />
+      </div>
+      <button type="submit" class="btn btn-primary">Generate Plan</button>
+    </form>
+  </section>
+
+  <!-- Results (hidden until submit) -->
+  <section id="results" class="container" style="display:none;">
+    <div class="cards">
+      <div class="card">
+        <h3>Cluster Assignment</h3>
+        <p id="clusterResult">—</p>
+      </div>
+      <div class="card">
+        <h3>Deficiency Prediction</h3>
+        <p id="predictionResult">—</p>
+      </div>
+      <div class="card">
+        <h3>Anomaly Check</h3>
+        <p id="anomalyResult">—</p>
+      </div>
+    </div>
+
+    <h2>Suggested Meal Plan</h2>
+    <table class="meal-plan">
+      <thead>
+        <tr>
+          <th>Meal</th>
+          <th>Food Items</th>
+          <th>Portion</th>
+        </tr>
+      </thead>
+      <tbody id="mealPlanBody">
+        <!-- JS will populate this -->
+      </tbody>
+    </table>
+
+    <a href="{{ url_for('home') }}" class="btn btn-outline">&larr; Back to Home</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 NutriKind AI. Made with ❤️ by GCEK</p>
+    </div>
+  </footer>
+
+  <!-- JS for sending form -->
+  <script>
+    const form = document.getElementById("nutritionForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => { data[key] = value; });
+
+      const response = await fetch("/generate-plan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      document.getElementById("clusterResult").innerText = result.cluster;
+      document.getElementById("predictionResult").innerText = result.deficiency;
+      document.getElementById("anomalyResult").innerText = result.anomaly;
+
+      const mealPlanBody = document.getElementById("mealPlanBody");
+      mealPlanBody.innerHTML = "";
+      result.meal_plan.forEach(meal => {
+        const row = `<tr><td>${meal.meal}</td><td>${meal.food}</td><td>${meal.portion}</td></tr>`;
+        mealPlanBody.innerHTML += row;
+      });
+
+      document.getElementById("results").style.display = "block";
+    });
+  </script>
+</body>
+</html>

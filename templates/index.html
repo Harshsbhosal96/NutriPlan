@@ -1,0 +1,75 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NutriKind AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container nav-container">
+      <div class="logo">NutriKind AI</div>
+      <a href="{{ url_for('contact') }}" class="btn btn-outline">Contact Us</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <h1>Unleash Tailored Diet Strategies</h1>
+        <p>Discover personalized nutrition plans powered by AI, optimizing your health journey with precise and innovative diet solutions.</p>
+        <a href="{{ url_for('plan') }}" class="btn btn-primary">Start Your Plan</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro Section -->
+  <section class="intro">
+    <div class="container">
+      <h2>Personalized Nutrition Plans for You</h2>
+      <p>Discover bespoke nutrition solutions tailored to support your health goals with NutriKind AI’s innovative, personalized planning platform.</p>
+    </div>
+  </section>
+
+  <!-- Features Section (for Teachers) -->
+  <section class="features">
+    <div class="container">
+      <h2>Advanced Nutrition Insights at Your Fingertips</h2>
+      <div class="cards">
+        <!-- Clustering Card -->
+        <div class="card">
+          <div class="icon">📊</div>
+          <h3>Clustering for Grouping Children by Health Profiles</h3>
+          <p>Group multiple children at once by health metrics.</p>
+          <a href="{{ url_for('cluster_page') }}" class="btn btn-outline">Go to Clustering</a>
+        </div>
+        <!-- Predictive Modeling Card -->
+        <div class="card">
+          <div class="icon">🔮</div>
+          <h3>Predictive Modeling for Deficiency Forecasting</h3>
+          <p>Forecast nutritional risks across your class data.</p>
+          <a href="{{ url_for('cluster_page') }}" class="btn btn-outline">Predict Deficiency</a>
+        </div>
+        <!-- Anomaly Detection Card -->
+        <div class="card">
+          <div class="icon">🚨</div>
+          <h3>Anomaly Detection for Health Monitoring</h3>
+          <p>Flag sudden health changes in students automatically.</p>
+          <a href="{{ url_for('cluster_page') }}" class="btn btn-outline">Detect Anamoly</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 NutriKind AI. Made with ❤️ by GCEK</p>
+    </div>
+  </footer>
+</body>
+</html>

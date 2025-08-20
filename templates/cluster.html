@@ -1,0 +1,34 @@
+<!-- templates/cluster.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teacher’s Portal | NutriKind AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="header">
+    <div class="container nav-container">
+      <div class="logo">NutriKind AI</div>
+      <a href="{{ url_for('home') }}" class="btn btn-outline">Home</a>
+      <a href="{{ url_for('plan') }}" class="btn btn-outline">Parent Plan</a>
+    </div>
+  </header>
+
+  <section class="hero-small container">
+    <h1>Teacher’s Bulk Analysis</h1>
+    <p>Upload an Excel or CSV with student health metrics; get clustering, deficiency flags, and anomaly alerts!</p>
+  </section>
+
+  <section class="container" style="padding:2em 0;">
+    <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="excel-file">Select Excel/CSV file:</label>
+        <input type="file" id="excel-file" name="excel-file" accept=".xlsx,.csv" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Upload & Analyze</button>
+    </form>
+  </section>
+</body>
+</html>

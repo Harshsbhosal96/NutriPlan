@@ -1,0 +1,81 @@
+<!-- templates/results.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analysis Results | NutriKind AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container nav-container">
+      <div class="logo">NutriKind AI</div>
+      <a href="{{ url_for('cluster_page') }}" class="btn btn-outline">&larr; Back to Upload</a>
+      <a href="{{ url_for('home') }}" class="btn btn-outline">Home</a>
+    </div>
+  </header>
+
+  <!-- Results Content -->
+  <section class="container" style="padding: 2em 0;">
+    <h1>Student Health Analysis</h1>
+
+    {% if clusters %}
+    <div class="table-responsive">
+      <table class="meal-plan">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Weight (kg)</th>
+            <th>Height (cm)</th>
+            <th>Hemoglobin (g/dL)</th>
+            <th>MUAC (cm)</th>
+            <th>Cluster</th>
+            <th>Deficiency</th>
+            <th>Anomaly</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student in clusters %}
+          <tr>
+            <td>{{ student.get('Name', student.get('Child', '—')) }}</td>
+            <td>{{ student['Age'] }}</td>
+            <td>{{ student['Weight'] }}</td>
+            <td>{{ student['Height'] }}</td>
+            <td>{{ student['Hemoglobin'] }}</td>
+            <td>{{ student['MUAC'] }}</td>
+            <td>{{ student['Cluster'] }}</td>
+            <td>{{ student['Deficiency'] }}</td>
+            <td>{{ student['Anomaly'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Cluster Charts Section -->
+    {% if charts %}
+    <h2 style="margin-top: 2em;">Visual Clustering Insights</h2>
+    <div class="chart-container">
+      {% for chart in charts %}
+      <div style="margin: 1em 0;">
+        <img src="data:image/png;base64,{{ chart }}" alt="Cluster Chart" style="max-width: 100%; border: 1px solid #ccc; border-radius: 8px;">
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% else %}
+    <p>No student data available. Please <a href="{{ url_for('cluster_page') }}" class="btn btn-outline">upload a file</a> to analyze.</p>
+    {% endif %}
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 NutriKind AI. Made with ❤️ by GCEK</p>
+    </div>
+  </footer>
+</body>
+</html>
